@@ -7,7 +7,6 @@ A modern food ordering platform built with Next.js micro-frontends and FastAPI b
 ### Frontend
 
 - Next.js 14
-- TypeScript
 - Tailwind CSS
 - Micro-frontend architecture
 
@@ -45,7 +44,7 @@ food-ordering-app/
 
 ```bash
 git clone <repository-url>
-cd food-ordering-app
+cd orderapp
 ```
 
 2. Start all services using Docker:
@@ -209,14 +208,6 @@ docker-compose ps
 ```bash
 docker-compose logs container-app
 ```
-
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch
-3. Commit your changes
-4. Push to the branch
-5. Create a new Pull Request
 
 ## License
 
