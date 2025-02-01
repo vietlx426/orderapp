@@ -6,6 +6,7 @@ class UserBase(BaseModel):
     email: EmailStr
     full_name: str
     is_shipper: bool = False
+    role: str
 
 class UserCreate(UserBase):
     password: str

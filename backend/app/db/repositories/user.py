@@ -9,11 +9,12 @@ class UserRepository:
         self.db = db
 
     def create(self, user_data: UserCreate) -> User:
+        hashed_password = get_password_hash(user_data.password)
         db_user = User(
             email=user_data.email,
+            hashed_password=hashed_password,
             full_name=user_data.full_name,
-            is_shipper=user_data.is_shipper,
-            hashed_password=get_password_hash(user_data.password)
+            role=user_data.role
         )
         self.db.add(db_user)
         self.db.commit()
