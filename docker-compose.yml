@@ -1,0 +1,56 @@
+version: "3.8"
+
+services:
+  container-app:
+    build:
+      context: ./frontend/container-app
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/container-app:/app
+      - /app/node_modules
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
+    command: >
+      sh -c "npm install &&
+             npm run dev"
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://postgres:123456@db:5432/foodapp
+    depends_on:
+      - db
+      - redis
+    command: >
+      sh -c "
+            pip install --upgrade pip
+            pip install -r requirements.txt &&
+             alembic upgrade head &&
+             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    command: redis-server --save 20 1 --loglevel warning
+
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: foodapp
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
+  redis_data:
