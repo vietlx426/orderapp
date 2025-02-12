@@ -4,7 +4,6 @@ import { Inter } from "next/font/google"
 import { Providers } from "@/providers"
 import { SpeedInsights } from "@vercel/speed-insights/next"
 
-import { Header } from "@/shared"
 import { siteConfig } from "@/config/site"
 
 import "./globals.css"
@@ -25,8 +24,6 @@ export default function RootLayout({
 		<html lang="en">
 			<body className={inter.className}>
 				<Providers>
-					<Header />
-
 					<main className="flex flex-col">{children}</main>
 					<SpeedInsights />
 				</Providers>

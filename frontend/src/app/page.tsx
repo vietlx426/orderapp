@@ -1,52 +1,29 @@
-import Balancer from "react-wrap-balancer"
-import Link from "next/link"
+"use client"
 
-import { Icons } from "@/icons"
+import { useState, useEffect } from "react"
+import dynamic from "next/dynamic"
+import LoginSkeleton from "./loading"
 
-import { Badge, Button } from "@/ui"
+const LoginContent = dynamic(() => import("./../containers/LoginContent"), {
+  loading: () => <LoginSkeleton />,
+})
 
-export default function Home() {
-	return (
-		<>
-			<section className="mx-auto flex max-w-[980px] flex-col items-center gap-2 py-8 md:py-12 md:pb-8 lg:py-40 lg:pb-20">
-				<Link
-					href="https://github.com/omergulcicek"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Badge variant="secondary">@omergulcicek</Badge>
-				</Link>
+export default function LoginPage() {
+  const [isLoading, setIsLoading] = useState(true)
 
-				<h1 className="text-center text-3xl font-bold leading-tight tracking-tighter md:text-5xl lg:leading-[1.1]">
-					Next.js Boilerplate
-				</h1>
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1000)
 
-				<p className="text-center text-lg font-light text-foreground">
-					<Balancer>
-						An open source boilerplate built using Next.js 14, TypeScript, and
-						Tailwind CSS
-					</Balancer>
-				</p>
+    return () => clearTimeout(timer)
+  }, [])
 
-				<nav className="flex items-center gap-4 py-4">
-					<Link href="/dashboard">
-						<Button size="sm" className="text-sm">
-							<span>Get Started</span>
-						</Button>
-					</Link>
-
-					<Link
-						href="https://github.com/omergulcicek/nextjs-boilerplate"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<Button variant="outline" size="sm">
-							<Icons.github className="h-4 w-4 mr-2" aria-label="GitHub" />
-							<span>GitHub</span>
-						</Button>
-					</Link>
-				</nav>
-			</section>
-		</>
-	)
+  return (
+    <div className="min-h-screen w-full bg-pink-50/50 flex items-center justify-center p-4">
+      <div className="bg-white rounded-3xl shadow-xl w-full max-w-4xl overflow-hidden">
+        {isLoading ? <LoginSkeleton /> : <LoginContent />}
+      </div>
+    </div>
+  )
 }
