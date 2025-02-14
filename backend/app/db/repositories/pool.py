@@ -46,3 +46,24 @@ class PoolOrderRepository:
 
     def get_pool_orders(self, pool_id: int):
         return self.db.query(PoolOrder).filter(PoolOrder.pool_id == pool_id).all()
+    
+    def get_pool_with_orders(self, pool_id: int):
+        pool = self.db.query(Pool).filter(Pool.id == pool_id).first()
+        if pool:
+            orders = self.db.query(PoolOrder)\
+                .filter(PoolOrder.pool_id == pool_id)\
+                .all()
+            return {
+                "pool_id": pool_id,
+                "orders": [{
+                    "id": order.id,
+                    "pool_id": order.pool_id,
+                    "user_id": order.user_id,
+                    "food_id": order.food_id,
+                    "quantity": order.quantity,
+                    "user_full_name": order.user.full_name,
+                    "food_name": order.food.name,
+                    "created_at": order.created_at
+                } for order in orders]
+            }
+        return None

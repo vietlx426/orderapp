@@ -1,12 +1,7 @@
-# backend/app/db/models/user.py
 from sqlalchemy import Boolean, Column, Integer, String, DateTime, Enum
 import enum
 from sqlalchemy.sql import func
 from app.db.base import Base
-
-class UserRole(str, enum.Enum):
-    ADMIN = "admin"
-    NORMAL = "normal"
 
 class User(Base):
     __tablename__ = "users"

@@ -1,21 +1,6 @@
 version: "3.8"
 
 services:
-  container-app:
-    build:
-      context: ./frontend/container-app
-      dockerfile: Dockerfile
-    volumes:
-      - ./frontend/container-app:/app
-      - /app/node_modules
-    ports:
-      - "3000:3000"
-    environment:
-      - NEXT_PUBLIC_API_URL=http://localhost:8000/api/v1
-    command: >
-      sh -c "npm install &&
-             npm run dev"
-
   backend:
     build:
       context: ./backend
@@ -31,10 +16,11 @@ services:
       - redis
     command: >
       sh -c "
-            pip install --upgrade pip
+            pip install --upgrade pip &&
             pip install -r requirements.txt &&
-             alembic upgrade head &&
-             uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
+            if [ ! -d 'alembic' ]; then alembic init alembic; fi &&
+            alembic upgrade head &&
+            uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload"
 
   redis:
     image: redis:7-alpine
@@ -52,6 +38,8 @@ services:
       POSTGRES_DB: foodapp
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
 
 volumes:
   postgres_data:

@@ -1,8 +1,8 @@
-"""add pool and pool_orders tables
+"""add new column to users
 
-Revision ID: b7fbaffb1221
-Revises: db335dea3ba3
-Create Date: 2025-02-01 18:25:51.444908
+Revision ID: 2989acf84930
+Revises: 
+Create Date: 2025-02-13 01:00:31.640002
 
 """
 from typing import Sequence, Union
@@ -12,8 +12,8 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = 'b7fbaffb1221'
-down_revision: Union[str, None] = 'db335dea3ba3'
+revision: str = '2989acf84930'
+down_revision: Union[str, None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
 

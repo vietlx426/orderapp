@@ -3,6 +3,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.openapi.utils import get_openapi
 from app.api.v1.api import api_router
 from app.schedulers.closepool import init_scheduler
+from app.websockets import endpoints as websocket_endpoints
+
+
 app = FastAPI(
     title="Food Ordering App",
     version="1.0.0",
@@ -63,3 +66,4 @@ app.openapi = custom_openapi
 
 # Include routers
 app.include_router(api_router, prefix="/api/v1")
+app.include_router(websocket_endpoints.router)
