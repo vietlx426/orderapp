@@ -31,18 +31,18 @@ def upgrade() -> None:
         column('hashed_password', sa.String),
         column('created_at', sa.DateTime),
         column('is_active', sa.Boolean),
-        column('is_superuser', sa.Boolean)
+        # column('is_superuser', sa.Boolean)
     )
 
     op.bulk_insert(users,
         [
             {
-                'email': 'admin@example.com',
+                'email': 'admin2@example.com',
                 'full_name': 'Hieu Dang',
                 'hashed_password': pwd_context.hash('123456'),
                 'created_at': datetime.now(),
                 'is_active': True,
-                'is_superuser': False
+                # 'is_superuser': False
             },
         
         ])
